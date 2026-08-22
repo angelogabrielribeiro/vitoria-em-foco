@@ -10,33 +10,141 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
+import { Route as DisponibilidadeRouteImport } from './routes/disponibilidade'
+import { Route as EncontrarRouteImport } from './routes/encontrar'
+import { Route as EnviarEditalRouteImport } from './routes/enviar-edital'
+import { Route as PainelRouteImport } from './routes/painel'
+import { Route as PlanoRouteImport } from './routes/plano'
+import { Route as PlanoCompletoRouteImport } from './routes/plano-completo'
+import { Route as QuestaoQuestaoIdRouteImport } from './routes/questao.$questaoId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DiagnosticoRoute = DiagnosticoRouteImport.update({
+  id: '/diagnostico',
+  path: '/diagnostico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DisponibilidadeRoute = DisponibilidadeRouteImport.update({
+  id: '/disponibilidade',
+  path: '/disponibilidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EncontrarRoute = EncontrarRouteImport.update({
+  id: '/encontrar',
+  path: '/encontrar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnviarEditalRoute = EnviarEditalRouteImport.update({
+  id: '/enviar-edital',
+  path: '/enviar-edital',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PainelRoute = PainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanoRoute = PlanoRouteImport.update({
+  id: '/plano',
+  path: '/plano',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanoCompletoRoute = PlanoCompletoRouteImport.update({
+  id: '/plano-completo',
+  path: '/plano-completo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuestaoQuestaoIdRoute = QuestaoQuestaoIdRouteImport.update({
+  id: '/questao/$questaoId',
+  path: '/questao/$questaoId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/diagnostico': typeof DiagnosticoRoute
+  '/disponibilidade': typeof DisponibilidadeRoute
+  '/encontrar': typeof EncontrarRoute
+  '/enviar-edital': typeof EnviarEditalRoute
+  '/painel': typeof PainelRoute
+  '/plano': typeof PlanoRoute
+  '/plano-completo': typeof PlanoCompletoRoute
+  '/questao/$questaoId': typeof QuestaoQuestaoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/diagnostico': typeof DiagnosticoRoute
+  '/disponibilidade': typeof DisponibilidadeRoute
+  '/encontrar': typeof EncontrarRoute
+  '/enviar-edital': typeof EnviarEditalRoute
+  '/painel': typeof PainelRoute
+  '/plano': typeof PlanoRoute
+  '/plano-completo': typeof PlanoCompletoRoute
+  '/questao/$questaoId': typeof QuestaoQuestaoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/diagnostico': typeof DiagnosticoRoute
+  '/disponibilidade': typeof DisponibilidadeRoute
+  '/encontrar': typeof EncontrarRoute
+  '/enviar-edital': typeof EnviarEditalRoute
+  '/painel': typeof PainelRoute
+  '/plano': typeof PlanoRoute
+  '/plano-completo': typeof PlanoCompletoRoute
+  '/questao/$questaoId': typeof QuestaoQuestaoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/diagnostico'
+    | '/disponibilidade'
+    | '/encontrar'
+    | '/enviar-edital'
+    | '/painel'
+    | '/plano'
+    | '/plano-completo'
+    | '/questao/$questaoId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/diagnostico'
+    | '/disponibilidade'
+    | '/encontrar'
+    | '/enviar-edital'
+    | '/painel'
+    | '/plano'
+    | '/plano-completo'
+    | '/questao/$questaoId'
+  id:
+    | '__root__'
+    | '/'
+    | '/diagnostico'
+    | '/disponibilidade'
+    | '/encontrar'
+    | '/enviar-edital'
+    | '/painel'
+    | '/plano'
+    | '/plano-completo'
+    | '/questao/$questaoId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DiagnosticoRoute: typeof DiagnosticoRoute
+  DisponibilidadeRoute: typeof DisponibilidadeRoute
+  EncontrarRoute: typeof EncontrarRoute
+  EnviarEditalRoute: typeof EnviarEditalRoute
+  PainelRoute: typeof PainelRoute
+  PlanoRoute: typeof PlanoRoute
+  PlanoCompletoRoute: typeof PlanoCompletoRoute
+  QuestaoQuestaoIdRoute: typeof QuestaoQuestaoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +156,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/diagnostico': {
+      id: '/diagnostico'
+      path: '/diagnostico'
+      fullPath: '/diagnostico'
+      preLoaderRoute: typeof DiagnosticoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/disponibilidade': {
+      id: '/disponibilidade'
+      path: '/disponibilidade'
+      fullPath: '/disponibilidade'
+      preLoaderRoute: typeof DisponibilidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/encontrar': {
+      id: '/encontrar'
+      path: '/encontrar'
+      fullPath: '/encontrar'
+      preLoaderRoute: typeof EncontrarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enviar-edital': {
+      id: '/enviar-edital'
+      path: '/enviar-edital'
+      fullPath: '/enviar-edital'
+      preLoaderRoute: typeof EnviarEditalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/painel': {
+      id: '/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof PainelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plano': {
+      id: '/plano'
+      path: '/plano'
+      fullPath: '/plano'
+      preLoaderRoute: typeof PlanoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plano-completo': {
+      id: '/plano-completo'
+      path: '/plano-completo'
+      fullPath: '/plano-completo'
+      preLoaderRoute: typeof PlanoCompletoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/questao/$questaoId': {
+      id: '/questao/$questaoId'
+      path: '/questao/$questaoId'
+      fullPath: '/questao/$questaoId'
+      preLoaderRoute: typeof QuestaoQuestaoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DiagnosticoRoute: DiagnosticoRoute,
+  DisponibilidadeRoute: DisponibilidadeRoute,
+  EncontrarRoute: EncontrarRoute,
+  EnviarEditalRoute: EnviarEditalRoute,
+  PainelRoute: PainelRoute,
+  PlanoRoute: PlanoRoute,
+  PlanoCompletoRoute: PlanoCompletoRoute,
+  QuestaoQuestaoIdRoute: QuestaoQuestaoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

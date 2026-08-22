@@ -14,9 +14,13 @@ export function WordReveal({
 }) {
   const words = text.split(" ");
   return (
-    <span className={cn("inline-block", className)}>
+    <span className={cn("inline-block", className)} aria-label={text}>
       {words.map((word, i) => (
-        <span key={`${word}-${i}`} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+        <span
+          key={`${word}-${i}`}
+          aria-hidden="true"
+          className="inline-block overflow-hidden pb-[0.08em] align-bottom"
+        >
           <motion.span
             className={cn(
               "inline-block",

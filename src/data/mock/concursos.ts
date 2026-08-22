@@ -319,7 +319,7 @@ function montar(molde: Molde, local: string, uf: UF, cidadeId: string | null): C
     esfera: molde.esfera,
     uf,
     cidadeId,
-    banca: BANCAS[seed % BANCAS.length],
+    banca: BANCAS[seed % BANCAS.length] ?? "Banca a confirmar",
     statusEdital: seed % 3 === 0 ? "inscricoes_abertas" : seed % 3 === 1 ? "publicado" : "previsto",
     dataProva: emDias(dias),
     inscricoesAte: emDias(Math.max(6, Math.round(dias * 0.35))),

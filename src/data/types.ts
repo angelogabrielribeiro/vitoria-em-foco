@@ -1,13 +1,37 @@
 /**
- * Tipos de domínio do Aprova30.
+ * Tipos de domínio do Vitória em Foco.
  * Esta camada é agnóstica de UI e de fonte de dados: hoje é alimentada por
  * mocks (src/data/mock/*), amanhã por PostgreSQL/Supabase + serviço de IA.
  */
 
 export type UF =
-  | "AC" | "AL" | "AP" | "AM" | "BA" | "CE" | "DF" | "ES" | "GO" | "MA"
-  | "MT" | "MS" | "MG" | "PA" | "PB" | "PR" | "PE" | "PI" | "RJ" | "RN"
-  | "RS" | "RO" | "RR" | "SC" | "SP" | "SE" | "TO";
+  | "AC"
+  | "AL"
+  | "AP"
+  | "AM"
+  | "BA"
+  | "CE"
+  | "DF"
+  | "ES"
+  | "GO"
+  | "MA"
+  | "MT"
+  | "MS"
+  | "MG"
+  | "PA"
+  | "PB"
+  | "PR"
+  | "PE"
+  | "PI"
+  | "RJ"
+  | "RN"
+  | "RS"
+  | "RO"
+  | "RR"
+  | "SC"
+  | "SP"
+  | "SE"
+  | "TO";
 
 export interface Estado {
   uf: UF;

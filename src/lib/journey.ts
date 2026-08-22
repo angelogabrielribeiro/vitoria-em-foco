@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import type { BlocoDia, DisponibilidadeBloco } from "@/data/types";
+import type { Alternativa, BlocoDia, DisponibilidadeBloco } from "@/data/types";
 
 /**
  * Store leve da jornada do candidato (persistida localmente).
@@ -18,6 +18,8 @@ export interface JourneyState {
   sequencia: number;
   diasConcluidos: number[];
   premium: boolean;
+  recompensasRecebidas: string[];
+  editalEnviado: { nome: string; tamanho: string } | null;
 }
 
 export const BLOCOS: { bloco: BlocoDia; label: string; hint: string }[] = [
@@ -38,14 +40,16 @@ const initial: JourneyState = {
     minutos: bloco === "noite" ? 60 : 30,
   })),
   diagnostico: [],
-  xp: 1240,
-  nivel: 4,
-  sequencia: 3,
-  diasConcluidos: [1, 2],
+  xp: 0,
+  nivel: 1,
+  sequencia: 0,
+  diasConcluidos: [],
   premium: false,
+  recompensasRecebidas: [],
+  editalEnviado: null,
 };
 
-const KEY = "aprova30.journey.v1";
+const KEY = "vitoria-em-foco.journey.v1";
 
 let state: JourneyState = initial;
 let hydrated = false;
@@ -56,7 +60,21 @@ function hydrate() {
   hydrated = true;
   try {
     const raw = window.localStorage.getItem(KEY);
-    if (raw) state = { ...initial, ...(JSON.parse(raw) as Partial<JourneyState>) };
+    if (raw) {
+      const saved = JSON.parse(raw) as Partial<JourneyState>;
+      state = {
+        ...initial,
+        ...saved,
+        disponibilidade: Array.isArray(saved.disponibilidade)
+          ? saved.disponibilidade
+          : initial.disponibilidade,
+        diagnostico: Array.isArray(saved.diagnostico) ? saved.diagnostico : [],
+        diasConcluidos: Array.isArray(saved.diasConcluidos) ? saved.diasConcluidos : [],
+        recompensasRecebidas: Array.isArray(saved.recompensasRecebidas)
+          ? saved.recompensasRecebidas
+          : [],
+      };
+    }
   } catch {
     /* ignora storage indisponível */
   }
@@ -84,12 +102,41 @@ export const journey = {
     state = { ...state, ...patch };
     emit();
   },
+  selecionarUf(uf: string) {
+    state = { ...state, uf, cidadeId: null, concursoId: null, cargoId: null };
+    emit();
+  },
+  selecionarCidade(cidadeId: string) {
+    state = { ...state, cidadeId, concursoId: null, cargoId: null };
+    emit();
+  },
+  selecionarConcurso(concursoId: string) {
+    state = { ...state, concursoId, cargoId: null, editalEnviado: null };
+    emit();
+  },
+  selecionarCargo(cargoId: string) {
+    state = { ...state, cargoId };
+    emit();
+  },
+  definirDisponibilidade(disponibilidade: DisponibilidadeBloco[]) {
+    state = { ...state, disponibilidade };
+    emit();
+  },
+  registrarEdital(nome: string, tamanho: string) {
+    state = {
+      ...state,
+      concursoId: null,
+      cargoId: null,
+      editalEnviado: { nome, tamanho },
+    };
+    emit();
+  },
   addXp(amount: number) {
     const xp = state.xp + amount;
     state = { ...state, xp, nivel: Math.max(1, Math.floor(xp / 400) + 1) };
     emit();
   },
-  registrarDiagnostico(questaoId: string, escolha: string, correta: boolean) {
+  registrarDiagnostico(questaoId: string, escolha: Alternativa["letra"], correta: boolean) {
     const diagnostico = [
       ...state.diagnostico.filter((d) => d.questaoId !== questaoId),
       { questaoId, escolha, correta },
@@ -102,8 +149,26 @@ export const journey = {
     state = { ...state, diasConcluidos: [...state.diasConcluidos, dia] };
     emit();
   },
+  premiar(id: string, amount: number) {
+    if (state.recompensasRecebidas.includes(id)) return false;
+    const xp = state.xp + amount;
+    state = {
+      ...state,
+      xp,
+      nivel: Math.max(1, Math.floor(xp / 400) + 1),
+      recompensasRecebidas: [...state.recompensasRecebidas, id],
+    };
+    emit();
+    return true;
+  },
   reset() {
-    state = initial;
+    state = {
+      ...initial,
+      disponibilidade: initial.disponibilidade.map((bloco) => ({ ...bloco })),
+      diagnostico: [],
+      diasConcluidos: [],
+      recompensasRecebidas: [],
+    };
     emit();
   },
 };

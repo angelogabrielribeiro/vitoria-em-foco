@@ -1,10 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { VitoriaExperience } from "@/components/aprova/VitoriaExperience";
 
-export const Route = createFileRoute("/")({
-  component: Index,
-});
+export const Route = createFileRoute("/plano")({ component: Plano });
 
-function Index() {
-  return <VitoriaExperience screen="landing" />;
+function Plano() {
+  return <VitoriaExperience screen="plan" />;
 }

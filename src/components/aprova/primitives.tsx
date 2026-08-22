@@ -30,14 +30,14 @@ export const actionVariants = cva(
 );
 
 export interface ActionProps
-  extends Omit<HTMLMotionProps<"button">, "children">,
-    VariantProps<typeof actionVariants> {
+  extends Omit<HTMLMotionProps<"button">, "children">, VariantProps<typeof actionVariants> {
   children?: ReactNode;
 }
 
 export function Action({ className, variant, size, children, ...props }: ActionProps) {
   return (
     <motion.button
+      type="button"
       whileTap={{ scale: 0.965 }}
       whileHover={{ y: -1 }}
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -109,10 +109,15 @@ export function ProgressBar({
   className?: string;
   tone?: "primary" | "accent" | "ember";
 }) {
-  const fill =
-    tone === "primary" ? "bg-primary" : tone === "accent" ? "bg-accent" : "bg-ember";
+  const fill = tone === "primary" ? "bg-primary" : tone === "accent" ? "bg-accent" : "bg-ember";
   return (
-    <div className={cn("h-2 w-full overflow-hidden rounded-full bg-surface-3", className)}>
+    <div
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.min(100, Math.max(0, Math.round(value)))}
+      className={cn("h-2 w-full overflow-hidden rounded-full bg-surface-3", className)}
+    >
       <motion.div
         className={cn("h-full rounded-full", fill)}
         initial={{ width: 0 }}
@@ -140,8 +145,17 @@ export function ProgressRing({
 }) {
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
+  const normalized = Math.min(100, Math.max(0, value));
   return (
-    <div className="relative grid place-items-center" style={{ width: size, height: size }}>
+    <div
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(normalized)}
+      aria-label={`${label}${sub ? ` ${sub}` : ""}`}
+      className="relative grid place-items-center"
+      style={{ width: size, height: size }}
+    >
       <svg width={size} height={size} className="-rotate-90">
         <circle
           cx={size / 2}
@@ -159,13 +173,17 @@ export function ProgressRing({
           className="fill-none stroke-primary"
           strokeDasharray={c}
           initial={{ strokeDashoffset: c }}
-          animate={{ strokeDashoffset: c - (c * Math.min(100, value)) / 100 }}
+          animate={{ strokeDashoffset: c - (c * normalized) / 100 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         />
       </svg>
       <div className="absolute text-center leading-none">
         <div className="font-display text-xl font-bold">{label}</div>
-        {sub ? <div className="mt-1 font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">{sub}</div> : null}
+        {sub ? (
+          <div className="mt-1 font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">
+            {sub}
+          </div>
+        ) : null}
       </div>
     </div>
   );
@@ -194,6 +212,7 @@ export function SelectRow({
     <motion.button
       type="button"
       onClick={onClick}
+      aria-pressed={selected}
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: Math.min(index * 0.03, 0.4), duration: 0.35, ease: [0.16, 1, 0.3, 1] }}

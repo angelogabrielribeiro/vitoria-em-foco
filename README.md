@@ -1,8 +1,9 @@
-# Concurso Turbo
+# Vitória em Foco
 
-Crie um novo webapp/PWA mobile-first para preparação de concursos públicos no Brasil. Nome provisório interno: Projeto Aprova30 (não tratar como marca final). O produto deve cobrir concursos federais, estaduais e municipais de todos os estados e municípios brasileiros, com fluxo extremamente simples para usuários pouco familiarizados com tecnologia.
+Webapp/PWA mobile-first para preparação de concursos públicos no Brasil. Nome provisório atual: **Vitória em Foco** (não tratar como marca final). O produto deve cobrir concursos federais, estaduais e municipais de todos os estados e municípios brasileiros, com fluxo extremamente simples para usuários pouco familiarizados com tecnologia.
 
 DIREÇÃO VISUAL OBRIGATÓRIA:
+
 - Não fazer landing page SaaS genérica de IA.
 - Evitar estética padrão roxo/azul neon, excesso de glassmorphism genérico, cards repetitivos e hero centralizado sem personalidade.
 - Queremos interface premium, tecnológica, viva, altamente interativa e animada.
@@ -15,6 +16,7 @@ DIREÇÃO VISUAL OBRIGATÓRIA:
 
 PRODUTO:
 Fluxo inicial em poucos passos:
+
 1. Escolher Estado.
 2. Escolher Cidade.
 3. Mostrar concursos daquela cidade dentro do próprio webapp.
@@ -27,6 +29,7 @@ Fluxo inicial em poucos passos:
 O sistema futuramente analisará o edital inteiro, não só matérias: escolaridade, vagas, datas, banca, pesos, conteúdo, TAF, psicológico, médico, investigação social, títulos, redação, documentos e demais etapas. Nesta primeira versão visual, use dados simulados claramente separados da camada real de dados.
 
 GAMIFICAÇÃO:
+
 - Home logada deve parecer uma experiência de jogo/progresso, não dashboard corporativo.
 - ‘Missão de hoje’ como elemento principal.
 - XP, nível, sequência de dias, progresso até a prova, conquistas, metas, simulados como ‘desafios’ e feedback visual de acerto/erro.
@@ -34,6 +37,7 @@ GAMIFICAÇÃO:
 - Não infantilizar; é adulto, moderno, energético e divertido.
 
 TELAS INICIAIS A CRIAR AGORA:
+
 - Landing page/hero animado com CTA principal ‘Encontrar meu concurso’.
 - Fluxo Estado > Cidade > Concurso > Cargo.
 - Tela ‘Enviar edital’.
@@ -45,6 +49,7 @@ TELAS INICIAIS A CRIAR AGORA:
 - Paywall visual após parte gratuita, com ‘Desbloquear plano completo’.
 
 ARQUITETURA:
+
 - Estruturar como PWA instalável.
 - Componentes reutilizáveis e tipos fortes.
 - Separar dados/mock de UI para futura integração com PostgreSQL/Supabase e serviço de IA.

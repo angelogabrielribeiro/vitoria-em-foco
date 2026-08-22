@@ -2,7 +2,15 @@ import type { Cargo, Conquista, DiaPlano } from "../types";
 
 /** MOCK — geração determinística do "Plano Intensivo de Aprovação". */
 
-const TIPOS: DiaPlano["tipo"][] = ["aula", "aula", "revisao", "aula", "desafio", "revisao", "simulado"];
+const TIPOS: DiaPlano["tipo"][] = [
+  "aula",
+  "aula",
+  "revisao",
+  "aula",
+  "desafio",
+  "revisao",
+  "simulado",
+];
 
 const FOCOS = [
   "Fundamentos e vocabulário da banca",
@@ -25,7 +33,7 @@ export function gerarPlano(
   diasAteProva: number,
   minutosPorDia: number,
 ): PlanoIntensivo {
-  const total = Math.min(30, Math.max(7, diasAteProva));
+  const total = Math.min(30, Math.max(1, diasAteProva));
   const disciplinas = cargo?.disciplinas.length
     ? cargo.disciplinas
     : [
@@ -33,24 +41,30 @@ export function gerarPlano(
         { id: "rlm", nome: "Raciocínio Lógico", questoes: 10, peso: 1, topicos: [] },
       ];
 
-  const pesos = disciplinas.flatMap((d) => Array<string>(Math.max(1, Math.round(d.peso))).fill(d.nome));
+  const pesos = disciplinas.flatMap((d) =>
+    Array<string>(Math.max(1, Math.round(d.peso))).fill(d.nome),
+  );
 
   const dias: DiaPlano[] = Array.from({ length: total }, (_, index) => {
     const dia = index + 1;
-    const tipo = dia % 7 === 0 ? "simulado" : TIPOS[index % TIPOS.length];
+    const tipo: DiaPlano["tipo"] =
+      dia % 7 === 0 ? "simulado" : (TIPOS[index % TIPOS.length] ?? "aula");
+    const principal = pesos[index % pesos.length] ?? disciplinas[0]?.nome ?? "Revisão geral";
+    const secundario = pesos[(index + 2) % pesos.length] ?? disciplinas[1]?.nome ?? principal;
     const principais =
       tipo === "simulado"
         ? disciplinas.slice(0, 3).map((d) => d.nome)
-        : [pesos[index % pesos.length], pesos[(index + 2) % pesos.length]].filter(
-            (nome, i, arr) => arr.indexOf(nome) === i,
-          );
+        : [principal, secundario].filter((nome, i, arr) => arr.indexOf(nome) === i);
     return {
       dia,
       titulo:
         tipo === "simulado"
           ? `Desafio semanal · Simulado ${Math.ceil(dia / 7)}`
           : `Dia ${dia} · ${principais[0]}`,
-      foco: tipo === "simulado" ? "Prova cronometrada com relatório de pontos fracos" : FOCOS[index % FOCOS.length],
+      foco:
+        tipo === "simulado"
+          ? "Prova cronometrada com relatório de pontos fracos"
+          : (FOCOS[index % FOCOS.length] ?? "Revisão orientada"),
       disciplinas: principais,
       minutos: tipo === "simulado" ? Math.round(minutosPorDia * 1.2) : minutosPorDia,
       tipo,
