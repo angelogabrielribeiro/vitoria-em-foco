@@ -1,5 +1,5 @@
 import type { Cargo, Concurso, EtapaConcurso, UF } from "../types";
-import { getCidade } from "./geografia";
+import { CIDADES, getCidade } from "./geografia";
 
 /**
  * MOCK — dados simulados de concursos. Não representam editais reais.
@@ -346,6 +346,28 @@ export function getConcursosPorCidade(cidadeId: string): Concurso[] {
 
 export function getConcurso(cidadeId: string, concursoId: string) {
   return getConcursosPorCidade(cidadeId).find((c) => c.id === concursoId);
+}
+
+/**
+ * Catálogo demonstrativo nacional. Os concursos estaduais e federais são
+ * deduplicados, enquanto cada município mantém suas próprias oportunidades.
+ */
+export function getCatalogoNacional(): Concurso[] {
+  const catalogo = new Map<string, Concurso>();
+  CIDADES.forEach((cidade) => {
+    getConcursosPorCidade(cidade.id).forEach((concurso) => {
+      if (!catalogo.has(concurso.id)) catalogo.set(concurso.id, concurso);
+    });
+  });
+  return [...catalogo.values()];
+}
+
+export function getConcursoGlobal(concursoId: string) {
+  return getCatalogoNacional().find((concurso) => concurso.id === concursoId);
+}
+
+export function getConcursosPorUf(uf: UF) {
+  return getCatalogoNacional().filter((concurso) => concurso.uf === uf);
 }
 
 export function diasAte(data: string) {

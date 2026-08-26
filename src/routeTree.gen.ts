@@ -10,10 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BibliotecaRouteImport } from './routes/biblioteca'
+import { Route as CentralRouteImport } from './routes/central'
+import { Route as ConcursoRouteImport } from './routes/concurso'
+import { Route as ConcursosRouteImport } from './routes/concursos'
+import { Route as CronogramaRouteImport } from './routes/cronograma'
 import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
 import { Route as DisponibilidadeRouteImport } from './routes/disponibilidade'
 import { Route as EncontrarRouteImport } from './routes/encontrar'
 import { Route as EnviarEditalRouteImport } from './routes/enviar-edital'
+import { Route as EstudarRouteImport } from './routes/estudar'
 import { Route as PainelRouteImport } from './routes/painel'
 import { Route as PlanoRouteImport } from './routes/plano'
 import { Route as PlanoCompletoRouteImport } from './routes/plano-completo'
@@ -22,6 +28,31 @@ import { Route as QuestaoQuestaoIdRouteImport } from './routes/questao.$questaoI
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BibliotecaRoute = BibliotecaRouteImport.update({
+  id: '/biblioteca',
+  path: '/biblioteca',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CentralRoute = CentralRouteImport.update({
+  id: '/central',
+  path: '/central',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConcursoRoute = ConcursoRouteImport.update({
+  id: '/concurso',
+  path: '/concurso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConcursosRoute = ConcursosRouteImport.update({
+  id: '/concursos',
+  path: '/concursos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CronogramaRoute = CronogramaRouteImport.update({
+  id: '/cronograma',
+  path: '/cronograma',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DiagnosticoRoute = DiagnosticoRouteImport.update({
@@ -42,6 +73,11 @@ const EncontrarRoute = EncontrarRouteImport.update({
 const EnviarEditalRoute = EnviarEditalRouteImport.update({
   id: '/enviar-edital',
   path: '/enviar-edital',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstudarRoute = EstudarRouteImport.update({
+  id: '/estudar',
+  path: '/estudar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PainelRoute = PainelRouteImport.update({
@@ -67,10 +103,16 @@ const QuestaoQuestaoIdRoute = QuestaoQuestaoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRoute
+  '/central': typeof CentralRoute
+  '/concurso': typeof ConcursoRoute
+  '/concursos': typeof ConcursosRoute
+  '/cronograma': typeof CronogramaRoute
   '/diagnostico': typeof DiagnosticoRoute
   '/disponibilidade': typeof DisponibilidadeRoute
   '/encontrar': typeof EncontrarRoute
   '/enviar-edital': typeof EnviarEditalRoute
+  '/estudar': typeof EstudarRoute
   '/painel': typeof PainelRoute
   '/plano': typeof PlanoRoute
   '/plano-completo': typeof PlanoCompletoRoute
@@ -78,10 +120,16 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRoute
+  '/central': typeof CentralRoute
+  '/concurso': typeof ConcursoRoute
+  '/concursos': typeof ConcursosRoute
+  '/cronograma': typeof CronogramaRoute
   '/diagnostico': typeof DiagnosticoRoute
   '/disponibilidade': typeof DisponibilidadeRoute
   '/encontrar': typeof EncontrarRoute
   '/enviar-edital': typeof EnviarEditalRoute
+  '/estudar': typeof EstudarRoute
   '/painel': typeof PainelRoute
   '/plano': typeof PlanoRoute
   '/plano-completo': typeof PlanoCompletoRoute
@@ -90,10 +138,16 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRoute
+  '/central': typeof CentralRoute
+  '/concurso': typeof ConcursoRoute
+  '/concursos': typeof ConcursosRoute
+  '/cronograma': typeof CronogramaRoute
   '/diagnostico': typeof DiagnosticoRoute
   '/disponibilidade': typeof DisponibilidadeRoute
   '/encontrar': typeof EncontrarRoute
   '/enviar-edital': typeof EnviarEditalRoute
+  '/estudar': typeof EstudarRoute
   '/painel': typeof PainelRoute
   '/plano': typeof PlanoRoute
   '/plano-completo': typeof PlanoCompletoRoute
@@ -103,10 +157,16 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/biblioteca'
+    | '/central'
+    | '/concurso'
+    | '/concursos'
+    | '/cronograma'
     | '/diagnostico'
     | '/disponibilidade'
     | '/encontrar'
     | '/enviar-edital'
+    | '/estudar'
     | '/painel'
     | '/plano'
     | '/plano-completo'
@@ -114,10 +174,16 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/biblioteca'
+    | '/central'
+    | '/concurso'
+    | '/concursos'
+    | '/cronograma'
     | '/diagnostico'
     | '/disponibilidade'
     | '/encontrar'
     | '/enviar-edital'
+    | '/estudar'
     | '/painel'
     | '/plano'
     | '/plano-completo'
@@ -125,10 +191,16 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/biblioteca'
+    | '/central'
+    | '/concurso'
+    | '/concursos'
+    | '/cronograma'
     | '/diagnostico'
     | '/disponibilidade'
     | '/encontrar'
     | '/enviar-edital'
+    | '/estudar'
     | '/painel'
     | '/plano'
     | '/plano-completo'
@@ -137,10 +209,16 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BibliotecaRoute: typeof BibliotecaRoute
+  CentralRoute: typeof CentralRoute
+  ConcursoRoute: typeof ConcursoRoute
+  ConcursosRoute: typeof ConcursosRoute
+  CronogramaRoute: typeof CronogramaRoute
   DiagnosticoRoute: typeof DiagnosticoRoute
   DisponibilidadeRoute: typeof DisponibilidadeRoute
   EncontrarRoute: typeof EncontrarRoute
   EnviarEditalRoute: typeof EnviarEditalRoute
+  EstudarRoute: typeof EstudarRoute
   PainelRoute: typeof PainelRoute
   PlanoRoute: typeof PlanoRoute
   PlanoCompletoRoute: typeof PlanoCompletoRoute
@@ -154,6 +232,41 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biblioteca': {
+      id: '/biblioteca'
+      path: '/biblioteca'
+      fullPath: '/biblioteca'
+      preLoaderRoute: typeof BibliotecaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/central': {
+      id: '/central'
+      path: '/central'
+      fullPath: '/central'
+      preLoaderRoute: typeof CentralRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/concurso': {
+      id: '/concurso'
+      path: '/concurso'
+      fullPath: '/concurso'
+      preLoaderRoute: typeof ConcursoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/concursos': {
+      id: '/concursos'
+      path: '/concursos'
+      fullPath: '/concursos'
+      preLoaderRoute: typeof ConcursosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cronograma': {
+      id: '/cronograma'
+      path: '/cronograma'
+      fullPath: '/cronograma'
+      preLoaderRoute: typeof CronogramaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/diagnostico': {
@@ -182,6 +295,13 @@ declare module '@tanstack/react-router' {
       path: '/enviar-edital'
       fullPath: '/enviar-edital'
       preLoaderRoute: typeof EnviarEditalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estudar': {
+      id: '/estudar'
+      path: '/estudar'
+      fullPath: '/estudar'
+      preLoaderRoute: typeof EstudarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/painel': {
@@ -217,10 +337,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BibliotecaRoute: BibliotecaRoute,
+  CentralRoute: CentralRoute,
+  ConcursoRoute: ConcursoRoute,
+  ConcursosRoute: ConcursosRoute,
+  CronogramaRoute: CronogramaRoute,
   DiagnosticoRoute: DiagnosticoRoute,
   DisponibilidadeRoute: DisponibilidadeRoute,
   EncontrarRoute: EncontrarRoute,
   EnviarEditalRoute: EnviarEditalRoute,
+  EstudarRoute: EstudarRoute,
   PainelRoute: PainelRoute,
   PlanoRoute: PlanoRoute,
   PlanoCompletoRoute: PlanoCompletoRoute,
