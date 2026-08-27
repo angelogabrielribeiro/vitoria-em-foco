@@ -55,17 +55,17 @@ const fragmentShader = `
     float cursor = exp(-3.3 * length(uv - mouse));
     float spark = pow(max(0.0, 1.0 - length(uv * vec2(0.72, 1.0) + vec2(-0.32, 0.08))), 3.0);
 
-    vec3 charcoal = vec3(0.025, 0.028, 0.022);
-    vec3 moss = vec3(0.12, 0.32, 0.12);
-    vec3 lime = vec3(0.56, 1.0, 0.24);
-    vec3 gold = vec3(1.0, 0.66, 0.12);
-    vec3 ember = vec3(1.0, 0.22, 0.06);
+    vec3 charcoal = vec3(0.018, 0.024, 0.055);
+    vec3 cobalt = vec3(0.07, 0.28, 1.0);
+    vec3 iris = vec3(0.48, 0.18, 1.0);
+    vec3 gold = vec3(1.0, 0.64, 0.12);
+    vec3 ember = vec3(1.0, 0.20, 0.12);
     vec3 color = charcoal;
-    color = mix(color, moss, smoothstep(0.15, 0.88, cloud) * 0.8);
-    color += lime * pow(cloud, 3.0) * (0.45 + energy * 0.5);
+    color = mix(color, cobalt, smoothstep(0.15, 0.88, cloud) * 0.72);
+    color += iris * pow(cloud, 3.0) * (0.4 + energy * 0.46);
     color += gold * vein * cloud * 0.16;
     color += mix(gold, ember, 0.52) * spark * (0.32 + 0.24 * sin(time * 0.7));
-    color += lime * cursor * 0.18;
+    color += cobalt * cursor * 0.22;
     color *= 0.88 + 0.12 * noise(gl_FragCoord.xy * 0.42 + time);
 
     float vignette = smoothstep(1.55, 0.24, length(uv * vec2(0.72, 0.9)));
@@ -94,7 +94,12 @@ export function LivingShader({
   energy?: number;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const energyRef = useRef(energy);
   const reduced = Boolean(useReducedMotion());
+
+  useEffect(() => {
+    energyRef.current = energy;
+  }, [energy]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -169,7 +174,7 @@ export function LivingShader({
         gl.uniform2f(resolution, canvas.width, canvas.height);
         gl.uniform2f(pointer, pointerX, pointerY);
         gl.uniform1f(time, now * 0.001);
-        gl.uniform1f(energyUniform, energy);
+        gl.uniform1f(energyUniform, energyRef.current);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
       }
       frame = window.requestAnimationFrame(render);
@@ -199,7 +204,7 @@ export function LivingShader({
       gl.deleteShader(vertex);
       gl.deleteShader(fragment);
     };
-  }, [energy, reduced]);
+  }, [reduced]);
 
   return (
     <div className={cn("living-shader", reduced && "living-shader--static", className)}>
@@ -208,3 +213,4 @@ export function LivingShader({
     </div>
   );
 }
+
