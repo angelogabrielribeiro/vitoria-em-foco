@@ -29,8 +29,11 @@ export function EditorialSheet({
   const [mounted, setMounted] = useState(false);
   const reduced = Boolean(useReducedMotion());
   const panelRef = useRef<HTMLElement>(null);
+  const closeRef = useRef(onClose);
   const titleId = useId();
   const summaryId = useId();
+
+  closeRef.current = onClose;
 
   useEffect(() => setMounted(true), []);
 
@@ -50,7 +53,7 @@ export function EditorialSheet({
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault();
-        onClose();
+        closeRef.current();
         return;
       }
       if (event.key !== "Tab" || !panelRef.current) return;
@@ -74,7 +77,7 @@ export function EditorialSheet({
       document.body.style.overflow = previousOverflow;
       previous?.focus();
     };
-  }, [onClose, open, reduced]);
+  }, [open, reduced]);
 
   if (!mounted) return null;
 
@@ -123,4 +126,3 @@ export function EditorialSheet({
     document.body,
   );
 }
-
