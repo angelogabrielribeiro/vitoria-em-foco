@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useNavigate } from "@tanstack/react-router";
 
+import { ArenaGame } from "./ArenaGame";
 import { CommandCenter } from "./CommandCenter";
 import { ContestAtlas } from "./ContestAtlas";
 import { DocumentLibrary } from "./DocumentLibrary";
@@ -52,6 +53,7 @@ export function VitoriaExperience({
             <StudyRoom go={go} mode="question" {...(questionId ? { questionId } : {})} />
           ) : null}
           {screen === "study" ? <StudyRoom go={go} /> : null}
+          {screen === "arena" ? <ArenaGame go={go} /> : null}
         </motion.div>
       </AnimatePresence>
     </>
