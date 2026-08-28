@@ -28,7 +28,6 @@ import {
   RotateCcw,
   Sparkles,
   Square,
-  Star,
   Target,
   Trophy,
   Volume2,
@@ -50,6 +49,7 @@ import { cn } from "@/lib/utils";
 import { AppShell, RewardBurst } from "./CarnivalShell";
 import type { ExperienceScreen } from "./experience";
 import { LivingShader } from "./LivingShader";
+import { QuestionExplanation } from "./QuestionExplanation";
 import { soundEngine } from "./sound-engine";
 
 type StudyMode = "mission" | "diagnostic" | "question";
@@ -474,7 +474,6 @@ function QuestionBattle({
   initialQuestionId?: string;
   complete: () => void;
 }) {
-  const journeyState = useJourney();
   const questions = useMemo(() => {
     if (!initialQuestionId) return DIAGNOSTICO.slice(0, 8);
     const first = getQuestao(initialQuestionId);
@@ -486,9 +485,7 @@ function QuestionBattle({
   const [selected, setSelected] = useState<Alternativa["letra"] | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState(0);
-  const [explanationTab, setExplanationTab] = useState<"direta" | "cena" | "distratores">("direta");
   const question = questions[index] ?? questions[0]!;
-  const savedInNotebook = journeyState.cadernoErros.includes(question.id);
   const correct = selected === question.correta;
   const submit = () => {
     if (!selected) return;
@@ -504,7 +501,6 @@ function QuestionBattle({
       setIndex((value) => value + 1);
       setSelected(null);
       setSubmitted(false);
-      setExplanationTab("direta");
     }
   };
   return (
@@ -552,92 +548,15 @@ function QuestionBattle({
         <button type="button" className="battle-submit" disabled={!selected} onClick={submit}>
           travar resposta <Target />
         </button>
-      ) : (
-        <motion.section
-          className={cn("creative-explanation", correct ? "is-correct" : "is-wrong")}
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          role="status"
-        >
-          <header>
-            <span>{correct ? <Check /> : <Brain />}</span>
-            <div>
-              <small>{correct ? "ACERTO CONFIRMADO" : "ERRO TRANSFORMADO EM MEMÓRIA"}</small>
-              <h3>{correct ? "Na mira." : "Vamos desmontar a armadilha."}</h3>
-            </div>
-          </header>
-          <nav>
-            <button
-              type="button"
-              className={explanationTab === "direta" ? "is-active" : undefined}
-              onClick={() => setExplanationTab("direta")}
-            >
-              regra direta
-            </button>
-            <button
-              type="button"
-              className={explanationTab === "cena" ? "is-active" : undefined}
-              onClick={() => setExplanationTab("cena")}
-            >
-              explica em cena
-            </button>
-            <button
-              type="button"
-              className={explanationTab === "distratores" ? "is-active" : undefined}
-              onClick={() => setExplanationTab("distratores")}
-            >
-              por que as outras caem
-            </button>
-          </nav>
-          {explanationTab === "direta" ? <p>{question.explicacao}</p> : null}
-          {explanationTab === "cena" ? (
-            <div className="explanation-scene">
-              <span>A</span>
-              <i>+</i>
-              <span>A</span>
-              <motion.b animate={{ scale: [0.6, 1.2, 1], rotate: [0, -4, 0] }}>À</motion.b>
-              <p>
-                {question.memoria ??
-                  "Transforme a regra em uma imagem e teste com uma substituição."}
-              </p>
-            </div>
-          ) : null}
-          {explanationTab === "distratores" ? (
-            <div className="distractor-grid">
-              {question.alternativas
-                .filter((answer) => answer.letra !== question.correta)
-                .map((answer) => (
-                  <div key={answer.letra}>
-                    <span>{answer.letra}</span>
-                    <p>
-                      {answer.letra === selected
-                        ? "Esta opção usa exatamente a armadilha mais provável: aplica a regra sem testar a função da palavra."
-                        : "Parece possível à primeira leitura, mas falha quando fazemos o teste de substituição."}
-                    </p>
-                  </div>
-                ))}
-            </div>
-          ) : null}
-          <footer>
-            <button
-              type="button"
-              className={savedInNotebook ? "is-saved" : undefined}
-              aria-pressed={savedInNotebook}
-              onClick={() => {
-                journey.alternarCadernoErro(question.id);
-                soundEngine.play("tap");
-              }}
-            >
-              <Star fill={savedInNotebook ? "currentColor" : "none"} />
-              {savedInNotebook ? "salvo no caderno" : "salvar no caderno de erros"}
-            </button>
-            <button type="button" onClick={next}>
-              {index === questions.length - 1 ? "encerrar batalha" : "próxima questão"}{" "}
-              <ArrowRight />
-            </button>
-          </footer>
-        </motion.section>
-      )}
+      ) : selected ? (
+        <QuestionExplanation
+          key={question.id}
+          question={question}
+          selected={selected}
+          onNext={next}
+          nextLabel={index === questions.length - 1 ? "encerrar batalha" : "entendi, próxima"}
+        />
+      ) : null}
     </div>
   );
 }
