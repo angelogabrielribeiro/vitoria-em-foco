@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   BookMarked,
   CalendarRange,
@@ -13,6 +13,7 @@ import {
   Sparkles,
   Target,
   Trophy,
+  Swords,
   X,
   Zap,
 } from "lucide-react";
@@ -52,7 +53,37 @@ const NAV_ITEMS: {
   { screen: "library", label: "Editais & provas", short: "Acervo", icon: BookMarked },
   { screen: "study", label: "Sala de estudo", short: "Estudar", icon: Zap },
   { screen: "schedule", label: "Cronograma", short: "Agenda", icon: CalendarRange },
+  { screen: "arena", label: "Arena de desafios", short: "Arena", icon: Swords },
 ];
+
+const STORY_STOPS = ["entrada", "ritmo", "domínio", "recompensa"];
+
+function ScrollStorySignal() {
+  const reduced = Boolean(useReducedMotion());
+  const { scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 130,
+    damping: 28,
+    mass: 0.22,
+  });
+  const scaleY = reduced ? scrollYProgress : smoothProgress;
+  const signalY = useTransform(scaleY, [0, 1], ["0%", "100%"]);
+
+  return (
+    <div className="scroll-story-signal" aria-hidden="true">
+      <span>ROTA</span>
+      <div>
+        <motion.i style={{ scaleY }} />
+        {STORY_STOPS.map((stop, index) => (
+          <b key={stop} style={{ top: `${(index / (STORY_STOPS.length - 1)) * 100}%` }}>
+            <em>{stop}</em>
+          </b>
+        ))}
+        <motion.strong style={{ top: signalY }} />
+      </div>
+    </div>
+  );
+}
 
 export function AppShell({
   current,
@@ -73,6 +104,7 @@ export function AppShell({
 
   return (
     <div className="command-app">
+      <ScrollStorySignal />
       <aside className="command-rail" aria-label="Navegação principal">
         <button
           type="button"
