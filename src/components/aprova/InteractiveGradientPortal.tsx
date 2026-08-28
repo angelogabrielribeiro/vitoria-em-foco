@@ -99,7 +99,7 @@ const fragmentShader = /* glsl */ `
     for (int i = 0; i < ${MAX_RIPPLES}; i++) {
       vec4 ripple = uRipples[i];
       float age = uTime - ripple.z;
-      float active = ripple.w * step(0.0, age) * (1.0 - step(2.35, age));
+      float rippleActive = ripple.w * step(0.0, age) * (1.0 - step(2.35, age));
       vec2 delta = (vUv - ripple.xy) * vec2(aspect, 1.0);
       float distanceFromRipple = length(delta);
       float radius = age * 0.54;
@@ -107,9 +107,9 @@ const fragmentShader = /* glsl */ `
       float echo = 1.0 - smoothstep(0.0, 0.025, abs(distanceFromRipple - radius * 0.64));
       float fade = 1.0 - smoothstep(0.18, 2.35, age);
 
-      rippleLight += (ring + echo * 0.34) * fade * active;
+      rippleLight += (ring + echo * 0.34) * fade * rippleActive;
       rippleWarp += sin(distanceFromRipple * 34.0 - age * 10.0) *
-        exp(-distanceFromRipple * 2.6) * fade * active;
+        exp(-distanceFromRipple * 2.6) * fade * rippleActive;
     }
 
     float gradientPosition = clamp(
@@ -438,4 +438,3 @@ export function InteractiveGradientPortal({
     </button>
   );
 }
-
