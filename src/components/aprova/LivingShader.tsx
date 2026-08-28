@@ -158,6 +158,13 @@ export function LivingShader({
 
     const move = (event: PointerEvent) => {
       const bounds = canvas.getBoundingClientRect();
+      if (
+        event.clientX < bounds.left ||
+        event.clientX > bounds.right ||
+        event.clientY < bounds.top ||
+        event.clientY > bounds.bottom
+      )
+        return;
       const dprX = canvas.width / Math.max(1, bounds.width);
       const dprY = canvas.height / Math.max(1, bounds.height);
       targetX = (event.clientX - bounds.left) * dprX;
@@ -189,7 +196,7 @@ export function LivingShader({
     );
     resizeObserver.observe(canvas);
     viewObserver.observe(canvas);
-    canvas.addEventListener("pointermove", move, { passive: true });
+    window.addEventListener("pointermove", move, { passive: true });
     resize();
     frame = window.requestAnimationFrame(render);
 
@@ -198,7 +205,7 @@ export function LivingShader({
       window.cancelAnimationFrame(frame);
       resizeObserver.disconnect();
       viewObserver.disconnect();
-      canvas.removeEventListener("pointermove", move);
+      window.removeEventListener("pointermove", move);
       gl.deleteBuffer(buffer);
       gl.deleteProgram(program);
       gl.deleteShader(vertex);
@@ -213,4 +220,3 @@ export function LivingShader({
     </div>
   );
 }
-
