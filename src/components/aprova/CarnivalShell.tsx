@@ -47,13 +47,68 @@ const NAV_ITEMS: {
   label: string;
   short: string;
   icon: typeof LayoutDashboard;
+  rank: string;
+  hint: string;
+  tone: string;
+  group?: string;
 }[] = [
-  { screen: "dashboard", label: "Central", short: "Central", icon: LayoutDashboard },
-  { screen: "contests", label: "Concursos", short: "Concursos", icon: Map },
-  { screen: "library", label: "Editais & provas", short: "Acervo", icon: BookMarked },
-  { screen: "study", label: "Sala de estudo", short: "Estudar", icon: Zap },
-  { screen: "schedule", label: "Cronograma", short: "Agenda", icon: CalendarRange },
-  { screen: "arena", label: "Arena de desafios", short: "Arena", icon: Swords },
+  {
+    screen: "library",
+    label: "Editais e provas",
+    short: "Editais",
+    icon: BookMarked,
+    rank: "01",
+    hint: "entenda a prova",
+    tone: "#ff6b5f",
+    group: "PRIORIDADES",
+  },
+  {
+    screen: "schedule",
+    label: "Cronograma",
+    short: "Plano",
+    icon: CalendarRange,
+    rank: "02",
+    hint: "organize a semana",
+    tone: "#ffbd4a",
+  },
+  {
+    screen: "dashboard",
+    label: "Objetivos",
+    short: "Metas",
+    icon: Target,
+    rank: "03",
+    hint: "acompanhe a rota",
+    tone: "#a887ff",
+  },
+  {
+    screen: "study",
+    label: "Estudar agora",
+    short: "Estudar",
+    icon: Zap,
+    rank: "04",
+    hint: "cumpra a missão",
+    tone: "#4ed9ff",
+    group: "EXECUTAR",
+  },
+  {
+    screen: "arena",
+    label: "Jogos e desafios",
+    short: "Jogos",
+    icon: Swords,
+    rank: "05",
+    hint: "ganhe XP e moedas",
+    tone: "#ff68bf",
+  },
+  {
+    screen: "contests",
+    label: "Concursos",
+    short: "Vagas",
+    icon: Map,
+    rank: "06",
+    hint: "mude seu alvo",
+    tone: "#5f82ff",
+    group: "EXPLORAR",
+  },
 ];
 
 const STORY_STOPS = ["entrada", "ritmo", "domínio", "recompensa"];
@@ -112,7 +167,7 @@ export function AppShell({
           onClick={() => go("landing")}
           aria-label="Ir ao início"
         >
-          <CarnivalBrand mini />
+          <CarnivalBrand />
         </button>
         <nav>
           {NAV_ITEMS.map((item) => (
@@ -122,9 +177,15 @@ export function AppShell({
               onClick={() => go(item.screen)}
               className={cn("command-rail__item", current === item.screen && "is-active")}
               aria-current={current === item.screen ? "page" : undefined}
+              style={{ "--nav-tone": item.tone } as React.CSSProperties}
+              data-group={item.group}
             >
+              <b>{item.rank}</b>
               <item.icon className="size-[1.15rem]" />
-              <span>{item.label}</span>
+              <span>
+                <strong>{item.label}</strong>
+                <small>{item.hint}</small>
+              </span>
             </button>
           ))}
         </nav>
@@ -187,6 +248,7 @@ export function AppShell({
             onClick={() => go(item.screen)}
             className={cn(current === item.screen && "is-active")}
             aria-current={current === item.screen ? "page" : undefined}
+            style={{ "--nav-tone": item.tone } as React.CSSProperties}
           >
             <item.icon className="size-[1.15rem]" />
             <span>{item.short}</span>
