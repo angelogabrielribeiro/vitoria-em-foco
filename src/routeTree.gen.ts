@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ArenaRouteImport } from './routes/arena'
 import { Route as BibliotecaRouteImport } from './routes/biblioteca'
 import { Route as CentralRouteImport } from './routes/central'
 import { Route as ConcursoRouteImport } from './routes/concurso'
@@ -28,6 +29,11 @@ import { Route as QuestaoQuestaoIdRouteImport } from './routes/questao.$questaoI
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArenaRoute = ArenaRouteImport.update({
+  id: '/arena',
+  path: '/arena',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BibliotecaRoute = BibliotecaRouteImport.update({
@@ -103,6 +109,7 @@ const QuestaoQuestaoIdRoute = QuestaoQuestaoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/arena': typeof ArenaRoute
   '/biblioteca': typeof BibliotecaRoute
   '/central': typeof CentralRoute
   '/concurso': typeof ConcursoRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/arena': typeof ArenaRoute
   '/biblioteca': typeof BibliotecaRoute
   '/central': typeof CentralRoute
   '/concurso': typeof ConcursoRoute
@@ -138,6 +146,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/arena': typeof ArenaRoute
   '/biblioteca': typeof BibliotecaRoute
   '/central': typeof CentralRoute
   '/concurso': typeof ConcursoRoute
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/arena'
     | '/biblioteca'
     | '/central'
     | '/concurso'
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/arena'
     | '/biblioteca'
     | '/central'
     | '/concurso'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/arena'
     | '/biblioteca'
     | '/central'
     | '/concurso'
@@ -209,6 +221,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ArenaRoute: typeof ArenaRoute
   BibliotecaRoute: typeof BibliotecaRoute
   CentralRoute: typeof CentralRoute
   ConcursoRoute: typeof ConcursoRoute
@@ -232,6 +245,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/arena': {
+      id: '/arena'
+      path: '/arena'
+      fullPath: '/arena'
+      preLoaderRoute: typeof ArenaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/biblioteca': {
@@ -337,6 +357,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ArenaRoute: ArenaRoute,
   BibliotecaRoute: BibliotecaRoute,
   CentralRoute: CentralRoute,
   ConcursoRoute: ConcursoRoute,
