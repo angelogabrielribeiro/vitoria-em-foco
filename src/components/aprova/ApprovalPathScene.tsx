@@ -162,6 +162,7 @@ export default function ApprovalPathScene() {
           dpr={[1, 1.5]}
           frameloop={!inView || reduced ? "demand" : "always"}
           gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+          style={{ pointerEvents: "none" }}
         >
           <RouteWorld paused={!inView} reduced={reduced} />
         </Canvas>
