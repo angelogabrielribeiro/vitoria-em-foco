@@ -343,11 +343,6 @@ export function LandingCarnival({ go }: { go: (screen: ExperienceScreen) => void
           className="journey-filmstrip"
           role="tablist"
           aria-label="Capítulos da experiência"
-          onWheel={(event) => {
-            if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
-            event.preventDefault();
-            select(active + Math.sign(event.deltaX));
-          }}
         >
           {CHAPTERS.map((item, index) => (
             <motion.button
@@ -619,4 +614,3 @@ export function LandingCarnival({ go }: { go: (screen: ExperienceScreen) => void
     </div>
   );
 }
-
