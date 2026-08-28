@@ -12,7 +12,8 @@ export type ExperienceScreen =
   | "contest"
   | "library"
   | "study"
-  | "schedule";
+  | "schedule"
+  | "arena";
 
 export const EXPERIENCE_ROUTES: Record<ExperienceScreen, string> = {
   landing: "/",
@@ -29,4 +30,5 @@ export const EXPERIENCE_ROUTES: Record<ExperienceScreen, string> = {
   library: "/biblioteca",
   study: "/estudar",
   schedule: "/cronograma",
+  arena: "/arena",
 };
