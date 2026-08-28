@@ -350,6 +350,13 @@ export function CommandCenter({ go }: { go: (screen: ExperienceScreen) => void }
                 <article
                   key={reward.id}
                   className={cn(owned && "is-owned", `reward-card--${index + 1}`)}
+                  title={
+                    owned
+                      ? `${reward.name} já faz parte da sua coleção.`
+                      : canBuy
+                        ? `Resgatar ${reward.name} por ${reward.cost} moedas.`
+                        : `Faltam ${reward.cost - state.coins} moedas para liberar ${reward.name}.`
+                  }
                 >
                   <span>
                     <reward.icon />
