@@ -1,32 +1,48 @@
 # Vitória em Foco
 
-PWA mobile-first para preparação de concursos públicos, combinando organização de estudos, diagnóstico, gamificação e experiência visual interativa.
+Webapp mobile-first para preparação de concursos públicos, combinando **planejamento de estudos, diagnóstico, gamificação e experiência interativa**.
 
-🔗 **Demo:** https://vitoria-em-foco.lovable.app
+**Demo:** https://vitoria-em-foco.lovable.app
 
-## Sobre o projeto
+## Visão geral
 
-O Vitória em Foco foi pensado para simplificar a preparação para concursos públicos no Brasil. O usuário percorre um fluxo de localização, concurso, cargo, disponibilidade de estudo e diagnóstico inicial para chegar a um plano de preparação mais direcionado.
+O Vitória em Foco foi concebido para transformar a preparação para concursos em uma jornada mais clara e acompanhável. Em vez de apresentar apenas listas de matérias, o produto organiza a experiência em etapas como escolha do concurso, disponibilidade de estudo, diagnóstico, cronograma, missão diária e progresso.
 
-A interface utiliza elementos de jogo para transformar progresso, questões e metas em uma experiência menos burocrática e mais envolvente.
+O projeto também explora recursos visuais e mecânicas de gamificação para tornar o acompanhamento menos parecido com um dashboard corporativo e mais próximo de uma experiência de progressão.
 
-## Principais recursos
+## Experiências implementadas
 
-- Experiência mobile-first / PWA
-- Fluxo Estado → Cidade → Concurso → Cargo
-- Diagnóstico inicial por questões
-- Missão diária e progresso de estudo
-- XP, níveis, sequência e conquistas
-- Plano de estudo apresentado como rota de progresso
-- Estrutura preparada para upload e futura análise de editais
-- Separação entre dados simulados e futura camada real de dados
-- Experiências 3D e animações adaptadas para mobile
+A base atual possui rotas e telas para:
+
+- descoberta e seleção de concursos;
+- detalhe de concurso;
+- envio de edital;
+- definição de disponibilidade de estudo;
+- diagnóstico inicial;
+- cronograma e planejamento;
+- central do aluno;
+- arena e desafios;
+- biblioteca de conteúdo;
+- fluxo de estudo;
+- acompanhamento de progresso.
+
+## Gamificação
+
+A interface trabalha com elementos como:
+
+- XP e progressão;
+- missões e desafios;
+- sequência de estudo;
+- feedback visual de evolução;
+- metas e acompanhamento até a prova.
 
 ## Stack
 
 - React 19
 - TypeScript
-- TanStack Start / Router / Query
+- TanStack Start
+- TanStack Router
+- TanStack Query
 - Vite
 - Tailwind CSS
 - Three.js
@@ -35,14 +51,18 @@ A interface utiliza elementos de jogo para transformar progresso, questões e me
 - Framer Motion
 - Zod
 
-## Arquitetura
+## Direção técnica
 
-O projeto prioriza componentes reutilizáveis e separação entre interface e dados, permitindo a futura conexão com PostgreSQL/Supabase e serviços de IA sem reconstruir toda a experiência.
+O projeto usa uma arquitetura baseada em rotas e componentes reutilizáveis, separando a experiência visual da camada de dados para facilitar uma futura integração com backend, banco de dados e serviços de IA.
 
-## Rodando localmente
+A interface foi pensada primeiro para dispositivos móveis, mas permanece responsiva em desktop. Recursos 3D e motion são usados como parte da narrativa visual, com preocupação em não transformar a experiência em uma simples coleção de efeitos decorativos.
+
+> A versão atual é um protótipo funcional de produto. Dados reais de concursos, processamento automático de editais, autenticação e backend completo fazem parte da evolução planejada e não são apresentados como concluídos.
+
+## Executando localmente
 
 ```bash
-git clone <url-do-repositorio>
+git clone https://github.com/angelogabrielribeiro/vitoria-em-foco.git
 cd vitoria-em-foco
 npm install
 npm run dev
@@ -50,8 +70,12 @@ npm run dev
 
 ## Status
 
-🚧 **Em desenvolvimento.** A versão atual funciona como base navegável e demonstração do produto, enquanto a camada de dados reais e automação de editais continua planejada para etapas posteriores.
+**Em desenvolvimento.** A base navegável e as principais experiências de produto estão implementadas; as próximas etapas envolvem dados reais, serviços de backend e expansão do conteúdo de preparação.
 
 ## Objetivos técnicos
 
-O projeto é utilizado para explorar PWA, gamificação, UX mobile-first, arquitetura de produto, animações, WebGL e construção de interfaces voltadas a fluxos complexos de forma simples para o usuário.
+O projeto é utilizado para aprofundar conhecimentos em arquitetura de aplicações React, UX mobile-first, gamificação, visualização de progresso, experiências 3D no navegador e modelagem de produtos digitais com múltiplos fluxos.
+
+---
+
+Desenvolvido por **Angelo Gabriel Ribeiro Santos**.
